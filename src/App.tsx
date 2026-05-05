@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -21,12 +21,14 @@ gsap.registerPlugin(ScrollTrigger)
 export default function App() {
   const [loading, setLoading] = useState(true)
   const { pathname } = useLocation()
+  const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
     const lenis = new Lenis({
       lerp: 0.1,
       smoothWheel: true,
     })
+    lenisRef.current = lenis
 
     function raf(time: number) {
       lenis.raf(time)
@@ -47,11 +49,15 @@ export default function App() {
     return () => {
       clearTimeout(timer)
       lenis.destroy()
+      lenisRef.current = null
     }
   }, [])
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' })
+  useLayoutEffect(() => {
+    lenisRef.current?.scrollTo(0, { immediate: true, force: true })
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
   }, [pathname])
 
   return (
