@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { Menu, X, Phone } from 'lucide-react'
+import { Link } from 'react-router'
 
 const navLinks = [
   { label: 'Solutions', href: '#solutions' },
@@ -51,12 +52,12 @@ export default function Navbar() {
         }`}
       >
         <div className="section-padding flex items-center justify-between">
-          <a href="#" className="flex items-center gap-3" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <Link to="/" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>
             <img src="/images/logo.png" alt="United Grow" className="h-10 w-auto" />
             <span className="hidden md:block text-[#F6FFF7] text-sm font-medium tracking-wide">
               United Grow Hydroponics
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center gap-6">
             <a
@@ -68,8 +69,10 @@ export default function Navbar() {
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="w-10 h-10 flex items-center justify-center text-[#F6FFF7] hover:text-[#D4AF37] transition-colors"
+              className="w-11 h-11 flex items-center justify-center text-[#F6FFF7] hover:text-[#D4AF37] transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu-overlay"
             >
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -79,11 +82,12 @@ export default function Navbar() {
 
       {/* Full-screen menu overlay */}
       <div
+        id="mobile-menu-overlay"
         className={`fixed inset-0 z-40 bg-[#0B1215] transition-all duration-700 ${
           menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
       >
-        <div className="h-full flex flex-col lg:flex-row">
+        <div className="h-full overflow-y-auto flex flex-col lg:flex-row">
           {/* Left side - Navigation */}
           <div className="flex-1 flex flex-col justify-center section-padding pt-24 lg:pt-0">
             <nav className="space-y-4 lg:space-y-6">
@@ -91,7 +95,7 @@ export default function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
-                  className="menu-link block text-left text-4xl lg:text-6xl font-light text-[#F6FFF7] hover:text-[#D4AF37] transition-colors duration-300"
+                  className="menu-link block text-left text-3xl sm:text-4xl lg:text-6xl font-light text-[#F6FFF7] hover:text-[#D4AF37] transition-colors duration-300"
                 >
                   {link.label}
                 </button>

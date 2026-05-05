@@ -13,6 +13,8 @@ import Infrastructure from './sections/Infrastructure'
 import LeadershipContact from './sections/LeadershipContact'
 import Footer from './components/Footer'
 import NotFound from './pages/NotFound'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfService from './pages/TermsOfService'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -70,6 +72,8 @@ export default function App() {
             </main>
           }
         />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

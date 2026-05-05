@@ -1,4 +1,5 @@
 import { Leaf, Factory } from 'lucide-react'
+import { Link } from 'react-router'
 
 const sitemap = [
   { label: 'Solutions', href: '#solutions' },
@@ -28,9 +29,9 @@ export default function Footer() {
               <span className="text-[#D4AF37]">Sustainable</span><br />
               Future
             </h2>
-            <div className="flex items-center gap-4 mb-8">
+            <Link to="/" className="inline-flex items-center gap-4 mb-8">
               <img src="/images/logo.png" alt="United Grow" className="h-16 w-auto" />
-            </div>
+            </Link>
             <p className="text-[#D7D7D7] max-w-md">
               United Grow Hydroponics S.A.R.L — From Source to Sustainable Farming.
               Delivering premium hydroponic solutions and UniGrow cocopeat substrates worldwide.
@@ -98,8 +99,12 @@ export default function Footer() {
             © {new Date().getFullYear()} United Grow Hydroponics S.A.R.L. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-xs text-[#D7D7D7]/60">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
+            <Link to="/privacy-policy" className="hover:text-[#D4AF37] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-of-service" className="hover:text-[#D4AF37] transition-colors">
+              Terms of Service
+            </Link>
             <span>Casablanca, Morocco</span>
           </div>
         </div>
