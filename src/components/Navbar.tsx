@@ -61,11 +61,11 @@ export default function Navbar() {
 
           <div className="flex items-center gap-6">
             <a
-              href="tel:+212728431924"
+              href="tel:+212601700202"
               className="hidden lg:flex items-center gap-2 text-[#D4AF37] text-sm hover:text-[#F6FFF7] transition-colors"
             >
               <Phone size={14} />
-              <span className="label-text">+212 728-431924</span>
+              <span className="label-text">+212 601-700202</span>
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -120,7 +120,7 @@ export default function Navbar() {
                   <div>
                     <p className="text-[#F6FFF7] font-medium">Morocco (HQ)</p>
                     <p>Casablanca</p>
-                    <p className="text-[#D4AF37]">+212 728-431924</p>
+                    <p className="text-[#D4AF37]">+212 601-700202</p>
                   </div>
                   <div>
                     <p className="text-[#F6FFF7] font-medium">Netherlands</p>

@@ -169,7 +169,11 @@ export default function LeadershipContact() {
                 </div>
                 <div>
                   <p className="text-[#F6FFF7] font-medium mb-1">Email</p>
-                  <p className="text-[#D7D7D7] text-sm">info@ughydroponics.com</p>
+                  <div className="text-[#D7D7D7] text-sm space-y-1">
+                    <p>info@ughydroponics.com</p>
+                    <p>int.trade@ughydroponics.com</p>
+                    <p>issam_berrhazi@ughydroponics.com</p>
+                  </div>
                 </div>
               </div>
 
@@ -180,7 +184,7 @@ export default function LeadershipContact() {
                 <div>
                   <p className="text-[#F6FFF7] font-medium mb-1">Phone</p>
                   <div className="text-[#D7D7D7] text-sm space-y-1">
-                    <p>+212 728-431924 (Morocco)</p>
+                    <p>+212 601-700202 (Morocco)</p>
                     <p>+91 8610253876 (India)</p>
                   </div>
                 </div>
