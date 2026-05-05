@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Mail, Phone, Globe, Send, MessageCircle } from 'lucide-react'
+import { Mail, Phone, Globe, Send } from 'lucide-react'
+import { SiWhatsapp } from 'react-icons/si'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -326,7 +327,7 @@ export default function LeadershipContact() {
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform animate-pulse-gold"
         aria-label="Contact on WhatsApp"
       >
-        <MessageCircle size={24} className="text-white" />
+        <SiWhatsapp size={26} className="text-white" />
       </a>
     </section>
   )

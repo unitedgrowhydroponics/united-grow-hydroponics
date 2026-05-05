@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Route, Routes, useLocation } from 'react-router'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Hero from './sections/Hero'
@@ -11,11 +12,13 @@ import GlobalNetwork from './sections/GlobalNetwork'
 import Infrastructure from './sections/Infrastructure'
 import LeadershipContact from './sections/LeadershipContact'
 import Footer from './components/Footer'
+import NotFound from './pages/NotFound'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
   const [loading, setLoading] = useState(true)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -45,18 +48,30 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [pathname])
+
   return (
     <div className="relative">
       {loading && <Loader />}
       <Navbar />
-      <main>
-        <Hero />
-        <SolutionsGrid />
-        <UniGrowProducts />
-        <GlobalNetwork />
-        <Infrastructure />
-        <LeadershipContact />
-      </main>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main>
+              <Hero animationDelay={loading ? 2.8 : 0} />
+              <SolutionsGrid />
+              <UniGrowProducts />
+              <GlobalNetwork />
+              <Infrastructure />
+              <LeadershipContact />
+            </main>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <Footer />
     </div>
   )

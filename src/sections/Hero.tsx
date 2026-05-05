@@ -1,13 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-export default function Hero() {
+type HeroProps = {
+  animationDelay?: number
+}
+
+export default function Hero({ animationDelay = 2.8 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 2.8 })
+      const tl = gsap.timeline({ delay: animationDelay })
 
       tl.fromTo(
         '.hero-label',
@@ -41,7 +45,7 @@ export default function Hero() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [animationDelay])
 
   const scrollToSection = (id: string) => {
     const el = document.querySelector(id)
