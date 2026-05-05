@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 200 25% 7%;
+    --foreground: 130 60% 97%;
+    --card: 200 25% 7%;
+    --card-foreground: 130 60% 97%;
+    --popover: 200 25% 7%;
+    --popover-foreground: 130 60% 97%;
+    --primary: 43 72% 52%;
+    --primary-foreground: 200 25% 7%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 130 60% 97%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 84%;
+    --accent: 130 100% 93%;
+    --accent-foreground: 200 25% 7%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 18%;
+    --ring: 43 72% 52%;
+    --radius: 0.625rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-[#0B1215] text-[#F6FFF7] antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'DM Sans', sans-serif;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-12 xl:px-20;
+  }
+  
+  .gold-text {
+    color: #D4AF37;
+  }
+  
+  .gold-border {
+    border-color: #D4AF37;
+  }
+  
+  .pill-btn {
+    @apply inline-flex items-center justify-center px-8 py-3 rounded-full text-sm font-medium tracking-widest uppercase transition-all duration-300;
+  }
+  
+  .pill-btn-outline {
+    @apply pill-btn border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0B1215];
+  }
+  
+  .pill-btn-solid {
+    @apply pill-btn bg-[#D4AF37] text-[#0B1215] hover:bg-[#c4a030];
+  }
+  
+  .label-text {
+    @apply text-[11px] uppercase tracking-[2px] font-medium;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .card-hover:hover {
+    @apply scale-[1.02];
+  }
+  
+  .reveal-wrapper {
+    position: relative;
+    color: #0B1215;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  
+  .reveal-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .reveal-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0B1215;
+    clip-path: inset(0 0 0 0);
+  }
+  
+  .reveal-text {
+    position: relative;
+    z-index: 1;
+    color: #D4AF37;
+  }
+  
+  .feature-carousel {
+    display: flex;
+    gap: 2rem;
+    height: 500px;
+    padding: 2rem;
+  }
+  
+  .feature-card {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  
+  .feature-carousel:hover .feature-card {
+    flex: 0.5;
+  }
+  
+  .feature-carousel:hover .feature-card:hover {
+    flex: 3;
+  }
+  
+  .feature-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .feature-card:hover img {
+    transform: scale(1.1);
+  }
+  
+  .glass-card {
+    @apply bg-[#0B1215]/80 backdrop-blur-md border border-white/10 rounded-lg;
+  }
+  
+  .text-shadow-hero {
+    text-shadow: 0 2px 40px rgba(0,0,0,0.7);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+    50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+  }
+  
+  .animate-pulse-gold {
+    animation: pulse-gold 2s infinite;
+  }
+}
