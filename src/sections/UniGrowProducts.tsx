@@ -273,7 +273,7 @@ export default function UniGrowProducts() {
               className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#D4AF37] text-[#D4AF37] text-sm font-medium tracking-wide hover:bg-[#D4AF37]/10 transition-colors"
             >
               <FileDown size={18} aria-hidden />
-              Download product catalogue
+              Download - United Grow Hydroponics Growing Systems - Product Catalog 2026
             </a>
             <a
               href={PRODUCT_CATALOGUE_EXPORT_GUIDE_PDF}
@@ -283,7 +283,7 @@ export default function UniGrowProducts() {
               className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#D4AF37] text-[#D4AF37] text-sm font-medium tracking-wide hover:bg-[#D4AF37]/10 transition-colors"
             >
               <FileDown size={18} aria-hidden />
-              Download catalogue &amp; export guide
+              Download - Unigrow - Premium cocopeat-based Export Catalogue 2025-2026
             </a>
           </div>
         </div>
