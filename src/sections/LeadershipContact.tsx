@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import emailjs from '@emailjs/browser'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Mail, Phone, Globe, Send } from 'lucide-react'
@@ -37,6 +38,14 @@ export default function LeadershipContact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    country: '',
+    message: '',
+  })
+  const [submitError, setSubmitError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -90,14 +99,93 @@ export default function LeadershipContact() {
     return () => ctx.revert()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = () => {
+    const nextErrors = {
+      name: '',
+      email: '',
+      country: '',
+      message: '',
+    }
+
+    const trimmedName = formData.name.trim()
+    const trimmedEmail = formData.email.trim()
+    const trimmedCountry = formData.country.trim()
+    const trimmedMessage = formData.message.trim()
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (trimmedName.length < 2) {
+      nextErrors.name = 'Please enter your full name.'
+    }
+
+    if (!emailPattern.test(trimmedEmail)) {
+      nextErrors.email = 'Please enter a valid email address.'
+    }
+
+    if (trimmedCountry.length < 2) {
+      nextErrors.country = 'Please enter your country.'
+    }
+
+    if (trimmedMessage.length < 10) {
+      nextErrors.message = 'Message should be at least 10 characters.'
+    }
+
+    setErrors(nextErrors)
+    return Object.values(nextErrors).every((value) => !value)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setSubmitError('')
+    if (!validateForm()) return
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+    if (!serviceId || !templateId || !publicKey) {
+      setSubmitError(
+        'Email is not configured yet. Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY to .env.local (see .env.example).'
+      )
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name.trim(),
+          from_email: formData.email.trim(),
+          country: formData.country.trim(),
+          inquiry_type: formData.inquiryType,
+          message: formData.message.trim(),
+        },
+        { publicKey }
+      )
+      setFormData({
+        name: '',
+        email: '',
+        country: '',
+        inquiryType: 'Products',
+        message: '',
+      })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 5000)
+    } catch {
+      setSubmitError('Something went wrong. Please try again or contact us by email or WhatsApp.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+
+    if (name in errors) {
+      setErrors((prev) => ({ ...prev, [name]: '' }))
+    }
   }
 
   return (
@@ -249,9 +337,12 @@ export default function LeadershipContact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#2D2D2D] border border-white/10 rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:border-[#D4AF37] focus:outline-none transition-colors"
+                    className={`w-full px-4 py-3 bg-[#2D2D2D] border rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:outline-none transition-colors ${
+                      errors.name ? 'border-red-400/80 focus:border-red-400' : 'border-white/10 focus:border-[#D4AF37]'
+                    }`}
                     placeholder="Your name"
                   />
+                  {errors.name && <p className="mt-2 text-xs text-red-300">{errors.name}</p>}
                 </div>
 
                 <div>
@@ -264,9 +355,12 @@ export default function LeadershipContact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#2D2D2D] border border-white/10 rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:border-[#D4AF37] focus:outline-none transition-colors"
+                    className={`w-full px-4 py-3 bg-[#2D2D2D] border rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:outline-none transition-colors ${
+                      errors.email ? 'border-red-400/80 focus:border-red-400' : 'border-white/10 focus:border-[#D4AF37]'
+                    }`}
                     placeholder="your@email.com"
                   />
+                  {errors.email && <p className="mt-2 text-xs text-red-300">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -279,9 +373,14 @@ export default function LeadershipContact() {
                     value={formData.country}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#2D2D2D] border border-white/10 rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:border-[#D4AF37] focus:outline-none transition-colors"
+                    className={`w-full px-4 py-3 bg-[#2D2D2D] border rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:outline-none transition-colors ${
+                      errors.country
+                        ? 'border-red-400/80 focus:border-red-400'
+                        : 'border-white/10 focus:border-[#D4AF37]'
+                    }`}
                     placeholder="Your country"
                   />
+                  {errors.country && <p className="mt-2 text-xs text-red-300">{errors.country}</p>}
                 </div>
 
                 <div>
@@ -309,13 +408,28 @@ export default function LeadershipContact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-3 bg-[#2D2D2D] border border-white/10 rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:border-[#D4AF37] focus:outline-none transition-colors resize-none"
+                    className={`w-full px-4 py-3 bg-[#2D2D2D] border rounded-lg text-[#F6FFF7] placeholder:text-[#D7D7D7]/50 focus:outline-none transition-colors resize-none ${
+                      errors.message
+                        ? 'border-red-400/80 focus:border-red-400'
+                        : 'border-white/10 focus:border-[#D4AF37]'
+                    }`}
                     placeholder="Tell us about your project or inquiry..."
                   />
+                  {errors.message && <p className="mt-2 text-xs text-red-300">{errors.message}</p>}
                 </div>
 
-                <button type="submit" className="pill-btn-solid w-full">
-                  Send Inquiry
+                {submitError && (
+                  <p className="text-sm text-red-300 border border-red-400/40 rounded-lg px-4 py-3 bg-red-950/30">
+                    {submitError}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="pill-btn-solid w-full disabled:opacity-60 disabled:pointer-events-none"
+                >
+                  {isSubmitting ? 'Sending…' : 'Send Inquiry'}
                 </button>
               </form>
             )}

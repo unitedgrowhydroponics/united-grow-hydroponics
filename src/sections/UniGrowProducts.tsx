@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Check, Package, Droplets, FlaskConical, Ruler, Ship } from 'lucide-react'
+import { Check, Package, Droplets, FlaskConical, Ruler, Ship, FileDown } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const PRODUCT_CATALOGUE_PDF = '/product-catalogue.pdf'
+/** URL-safe name (ampersand in filenames often serves index.html instead of the PDF on static hosts) */
+const PRODUCT_CATALOGUE_EXPORT_GUIDE_PDF = '/product-catalogue-export-guide.pdf'
 
 /* ─────────────── PRODUCT DATA ─────────────── */
 
@@ -260,6 +264,28 @@ export default function UniGrowProducts() {
             Every UniGrow product is manufactured under strict quality control, with batch-tested EC and pH,
             customizable blends, and full export documentation. From substrate to harvest — precision at every layer.
           </p>
+          <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3">
+            <a
+              href={PRODUCT_CATALOGUE_PDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#D4AF37] text-[#D4AF37] text-sm font-medium tracking-wide hover:bg-[#D4AF37]/10 transition-colors"
+            >
+              <FileDown size={18} aria-hidden />
+              Download product catalogue
+            </a>
+            <a
+              href={PRODUCT_CATALOGUE_EXPORT_GUIDE_PDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[#D4AF37] text-[#D4AF37] text-sm font-medium tracking-wide hover:bg-[#D4AF37]/10 transition-colors"
+            >
+              <FileDown size={18} aria-hidden />
+              Download catalogue &amp; export guide
+            </a>
+          </div>
         </div>
 
         {/* Core Quality Banner */}
